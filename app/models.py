@@ -17,6 +17,16 @@ class Item(db.Model):
     quantity = db.Column(db.Integer)
     unit = db.Column(db.String(64))
 
+    # TODO: Use more general methods
+    @property
+    def serialize(self):
+       return {
+            'id'         : self.id,
+            'item_name'  : self.item_name,
+            'quantity'   : self.quantity,
+            'unit'       : self.unit
+       }
+
     def __repr(self):
         return '<Item {}>'.format(self.itemname)
 
