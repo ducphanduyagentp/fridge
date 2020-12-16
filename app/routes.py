@@ -28,8 +28,9 @@ def add_item():
 def remove_item():
     response_object = {'status': 'success'}
     post_data = request.get_json()
-    item_id = post_data.get('id')
-    Item.query.filter(id=item_id).delete()
+    item_id = int(post_data.get('id'))
+    Item.query.filter(Item.id == item_id).delete()
+    db.session.commit()
     return jsonify(response_object)
 
 
