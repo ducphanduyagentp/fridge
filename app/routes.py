@@ -7,10 +7,6 @@ import sys
 
 from app.models import Item, Receipe
 
-@app.route('/')
-def index():
-    return "bruh"
-
 @app.route('/addItem', methods=['POST'])
 def add_item():
     response_object = {'status': 'success'}
