@@ -37,9 +37,9 @@ def edit_item():
     item_name = post_data.get('item_name')
     quantity = post_data.get('quantity', 0)
     unit = post_data.get('unit', '')
-    item_id = post_data.get('id')
+    item_id = int(post_data.get('id'))
 
-    item = Item.query.filter(id=item_id).first()
+    item = Item.query.filter(Item.id == item_id).first()
 
     item.item_name = item_name
     item.quantity = quantity
