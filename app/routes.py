@@ -70,7 +70,8 @@ def add_receipe():
     receipe_name = post_data.get('receipe_name')
     ingredients = post_data.get('ingredients', [])
     cooking_time = int(post_data.get('cooking_time', 0))
-    receipe = Receipe(receipe_name=receipe_name, ingredients=ingredients, cooking_time=cooking_time)
+    optional_ingredients = post_data.get('optional_ingredients', [])
+    receipe = Receipe(receipe_name=receipe_name, ingredients=ingredients, cooking_time=cooking_time, optional_ingredients=optional_ingredients)
     db.session.add(receipe)
     db.session.commit()
     return jsonify(response_object)
@@ -93,6 +94,7 @@ def edit_receipe():
     receipe_name = post_data.get('receipe_name')
     ingredients = post_data.get('ingredients', [])
     cooking_time = post_data.get('cooking_time', 0)
+    optional_ingredients = post_data.get('optional_ingredients', [])
     receipe_id = int(post_data.get('id'))
 
     receipe = Receipe.query.filter(Receipe.id == receipe_id).first()
@@ -100,6 +102,7 @@ def edit_receipe():
     receipe.receipe_name = receipe_name
     receipe.ingredients = ingredients
     receipe.cooking_time = cooking_time
+    receipe.optional_ingredients = optional_ingredients
 
     db.session.commit()
     return jsonify(response_object)
