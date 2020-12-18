@@ -54,3 +54,52 @@ def get_items():
     response_object = {'status': 'success'}
     items = Item.query.all()
     return jsonify([item.serialize for item in items])
+
+
+@app.route('/getReceipes', methods=['GET'])
+def get_receipes():
+    respose_object = {'status': 'success'}
+    receipes = Receipe.query.all()
+    return jsonify([receipe.serialize for receipe in receipes])
+
+
+@app.route('/addReceipe', methods=['POST'])
+def add_receipe():
+    response_object = {'status': 'success'}
+    post_data = request.get_json()
+    receipe_name = post_data.get('receipe_name')
+    ingredients = post_data.get('ingredients', [])
+    cooking_time = int(post_data.get('cooking_time', 0))
+    receipe = Receipe(receipe_name=receipe_name, ingredients=ingredients, cooking_time=cooking_time)
+    db.session.add(receipe)
+    db.session.commit()
+    return jsonify(response_object)
+
+
+@app.route('/removeReceipe', methods=['POST'])
+def remove_receipe():
+    response_object = {'status': 'success'}
+    post_data = request.get_json()
+    receipe_id = int(post_data.get('id'))
+    Receipe.query.filter(Receipe.id == receipe_id).delete()
+    db.session.commit()
+    return jsonify(response_object)
+
+
+@app.route('/editReceipe', methods=['POST'])
+def edit_receipe():
+    response_object = {'status': 'success'}
+    post_data = request.get_json()
+    receipe_name = post_data.get('receipe_name')
+    ingredients = post_data.get('ingredients', [])
+    cooking_time = post_data.get('cooking_time', 0)
+    receipe_id = int(post_data.get('id'))
+
+    receipe = Receipe.query.filter(Receipe.id == receipe_id).first()
+
+    receipe.receipe_name = receipe_name
+    receipe.ingredients = ingredients
+    receipe.cooking_time = cooking_time
+
+    db.session.commit()
+    return jsonify(response_object)

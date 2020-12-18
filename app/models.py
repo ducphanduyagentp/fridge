@@ -35,6 +35,17 @@ class Receipe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     receipe_name = db.Column(db.String(64), index=True, unique=True)
     ingredients = db.Column(db.PickleType)
+    cooking_time = db.Column(db.Integer)
+
+    # TODO: Use more general methods
+    @property
+    def serialize(self):
+        return {
+            'id'            : self.id,
+            'receipe_name'  : self.receipe_name,
+            'ingredients'   : self.ingredients,
+            'cooking_time'  : self.cooking_time
+        }
 
     def __repr__(self):
         return '<Receipe {}>'.format(self.receipe_name)
