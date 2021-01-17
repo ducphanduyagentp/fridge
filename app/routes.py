@@ -14,7 +14,8 @@ def add_item():
     item_name = post_data.get('item_name')
     quantity = post_data.get('quantity', 0)
     unit = post_data.get('unit', '')
-    item = Item(item_name=item_name, quantity=quantity, unit=unit)
+    ingredient_type = post_data.get('ingredient_type', '')
+    item = Item(item_name=item_name, quantity=quantity, unit=unit, ingredient_type=ingredient_type)
     db.session.add(item)
     db.session.commit()
     return jsonify(response_object)
@@ -37,6 +38,7 @@ def edit_item():
     item_name = post_data.get('item_name')
     quantity = post_data.get('quantity', 0)
     unit = post_data.get('unit', '')
+    ingredient_type = post_data.get('ingredient_type', '')
     item_id = int(post_data.get('id'))
 
     item = Item.query.filter(Item.id == item_id).first()
@@ -44,6 +46,7 @@ def edit_item():
     item.item_name = item_name
     item.quantity = quantity
     item.unit = unit
+    item.ingredient_type = ingredient_type
 
     db.session.commit()
     return jsonify(response_object)

@@ -16,6 +16,7 @@ class Item(db.Model):
     item_name = db.Column(db.String(64), index=True, unique=True)
     quantity = db.Column(db.Integer)
     unit = db.Column(db.String(64))
+    ingredient_type = db.Column(db.String(64))
 
     # TODO: Use more general methods
     @property
@@ -24,7 +25,8 @@ class Item(db.Model):
             'id'         : self.id,
             'item_name'  : self.item_name,
             'quantity'   : self.quantity,
-            'unit'       : self.unit
+            'unit'       : self.unit,
+            'ingredient_type': self.ingredient_type
        }
 
     def __repr(self):
